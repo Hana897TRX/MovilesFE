@@ -12,12 +12,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NoteRepository(application: Application) : AppCompatActivity() {
-    private lateinit var noteDao : NoteDao
-    private lateinit var allNotes : LiveData<List<NoteModel>>
+    private var noteDao : NoteDao
+    private var allNotes : LiveData<List<NoteModel>>
 
     init {
         var noteDB = NoteDB.getInstance(application)
         noteDao = noteDB.noteDao()
+
+        var notemodel = NoteModel(0, "Hello", "Hello World", 2)
+        insert(notemodel)
+
         allNotes = noteDao.getAllNotes()
     }
 
