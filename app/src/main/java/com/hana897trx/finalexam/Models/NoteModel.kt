@@ -1,4 +1,4 @@
-package com.hana897trx.finalexam
+package com.hana897trx.finalexam.Models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "note_table")
-class Note (
+class NoteModel (
     @PrimaryKey(autoGenerate = true)
     @NotNull
     @ColumnInfo(name = "id")
