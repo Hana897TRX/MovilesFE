@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hana897trx.finalexam.Models.NoteModel
 import com.hana897trx.finalexam.R
 import kotlinx.android.synthetic.main.note_item.view.*
 
-class NoteAdapter() : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+class NoteAdapter() : ListAdapter<NoteModel, NoteAdapter.NoteHolder>(TaskDiffCallback()) {
 
     private var notes : List<NoteModel> = ArrayList<NoteModel>()
     private lateinit var listener : OnItemClickListener
@@ -40,28 +41,24 @@ class NoteAdapter() : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
         return NoteHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return notes.size
-    }
-
     fun setNotes(notes : List<NoteModel>){
         this.notes = notes
         notifyDataSetChanged()
     }
 
     fun getNoteAt(position: Int) : NoteModel {
-        return notes[position]
+        return getItem(position)
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
-        var currentNode = notes[position]
+        var currentNode = getItem(position)
         holder.itemView.txtTitle.text = currentNode.title
         holder.itemView.txtDescription.text = currentNode.description
         holder.itemView.txtPriority.text = currentNode.priority.toString()
 
         holder.itemView.setOnClickListener {
             if (position != RecyclerView.NO_POSITION)
-                listener.onItemClick(notes.get(position))
+                listener.onItemClick(getItem(position))
         }
     }
 }

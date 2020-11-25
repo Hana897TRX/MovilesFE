@@ -16,7 +16,7 @@ class NoteRepository(application: Application) : AppCompatActivity() {
     private var allNotes : LiveData<List<NoteModel>>
 
     init {
-        var noteDB = NoteDB.getInstance(application)
+        val noteDB = NoteDB.getInstance(application)
         noteDao = noteDB.noteDao()
 
         allNotes = noteDao.getAllNotes()

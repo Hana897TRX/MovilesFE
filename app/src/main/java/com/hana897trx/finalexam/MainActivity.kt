@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // ViewModel
         noteView = ViewModelProviders.of(this).get(NoteViewModel::class.java)
         noteView.getAllNodes().observe(this, Observer<List<NoteModel>> {
-            noteAdapter.setNotes(it)
+            noteAdapter.submitList(it)
             Toast.makeText(this@MainActivity, "onChanged", Toast.LENGTH_SHORT)
                 .show()
         })
@@ -104,10 +104,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             val note = NoteModel(
-                data!!.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1),
-                data!!.getStringExtra(AddEditNoteActivity.EXTRA_TITLE)!!,
-                data!!.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION)!!,
-                data!!.getStringExtra(AddEditNoteActivity.EXTRA_PRIORITY).toString().toInt()
+                data.getIntExtra(AddEditNoteActivity.EXTRA_ID, -1),
+                data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE)!!,
+                data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION)!!,
+                data.getStringExtra(AddEditNoteActivity.EXTRA_PRIORITY).toString().toInt()
             )
             noteView.update(note)
             Toast.makeText(this@MainActivity, "Note updated", Toast.LENGTH_SHORT)
