@@ -10,8 +10,10 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.note_item.*
 
-class AddNoteActivity : AppCompatActivity() {
+class AddEditNoteActivity : AppCompatActivity() {
+
     companion object {
+        var EXTRA_ID = "com.hana897trx.finalexam.EXTRA_ID"
         var EXTRA_TITLE = "com.hana897trx.finalexam.EXTRA_TITLE"
         var EXTRA_DESCRIPTION = "com.hana897trx.finalexam.EXTRA_DESCRIPTION"
         var EXTRA_PRIORITY = "com.hana897trx.finalexam.EXTRA_PRIORITY"
@@ -26,7 +28,17 @@ class AddNoteActivity : AppCompatActivity() {
         number_priority.minValue = 1
 
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
-        title = "Add Note"
+
+        val intent = intent
+
+        if(intent.hasExtra(EXTRA_ID)) {
+            title = "Edit note"
+            txtTitleR.setText(intent.getStringExtra(EXTRA_TITLE))
+            txtDescriptionR.setText(intent.getStringExtra(EXTRA_DESCRIPTION))
+            number_priority.value = intent.getIntExtra(EXTRA_PRIORITY, -1)
+        }
+        else
+            title = "Add Note"
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,7 +58,7 @@ class AddNoteActivity : AppCompatActivity() {
 
     private fun saveNote(){
         if(txtTitleR.text.isEmpty() || txtDescriptionR.text.isEmpty()){
-            Toast.makeText(this@AddNoteActivity, "No se han introducido datos", Toast.LENGTH_SHORT)
+            Toast.makeText(this@AddEditNoteActivity, "No se han introducido datos", Toast.LENGTH_SHORT)
                 .show()
             return
         }
@@ -55,6 +67,10 @@ class AddNoteActivity : AppCompatActivity() {
         data.putExtra(EXTRA_TITLE, txtTitleR.text.toString())
         data.putExtra(EXTRA_DESCRIPTION, txtDescriptionR.text.toString())
         data.putExtra(EXTRA_PRIORITY, number_priority.value.toString())
+
+        val id = intent.getIntExtra(EXTRA_ID, -1)
+        if(id != -1)
+            data.putExtra(EXTRA_ID, id)
 
         setResult(Activity.RESULT_OK, data)
         finish()

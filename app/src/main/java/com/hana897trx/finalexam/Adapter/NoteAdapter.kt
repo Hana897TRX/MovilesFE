@@ -1,5 +1,6 @@
 package com.hana897trx.finalexam.Adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,18 @@ import com.hana897trx.finalexam.Models.NoteModel
 import com.hana897trx.finalexam.R
 import kotlinx.android.synthetic.main.note_item.view.*
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
+class NoteAdapter() : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
 
     private var notes : List<NoteModel> = ArrayList<NoteModel>()
+    private lateinit var listener : OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(note : NoteModel)
+    }
+
+    fun setOnItemClickListener(_listener: OnItemClickListener) {
+        listener = _listener
+    }
 
     class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var txtTitle : TextView
@@ -26,7 +36,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
-        var itemView = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
         return NoteHolder(itemView)
     }
 
@@ -48,6 +58,10 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
         holder.itemView.txtTitle.text = currentNode.title
         holder.itemView.txtDescription.text = currentNode.description
         holder.itemView.txtPriority.text = currentNode.priority.toString()
-    }
 
+        holder.itemView.setOnClickListener {
+            if (position != RecyclerView.NO_POSITION)
+                listener.onItemClick(notes.get(position))
+        }
+    }
 }
