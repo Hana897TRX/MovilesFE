@@ -14,9 +14,9 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     private var notes : List<NoteModel> = ArrayList<NoteModel>()
 
     class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private lateinit var txtTitle : TextView
-        private lateinit var txtPriority : TextView
-        private lateinit var txtDescription : TextView
+        private var txtTitle : TextView
+        private var txtPriority : TextView
+        private var txtDescription : TextView
 
         init {
             txtTitle = itemView.findViewById(R.id.txtTitle)
@@ -37,6 +37,10 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>() {
     fun setNotes(notes : List<NoteModel>){
         this.notes = notes
         notifyDataSetChanged()
+    }
+
+    fun getNoteAt(position: Int) : NoteModel {
+        return notes[position]
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {

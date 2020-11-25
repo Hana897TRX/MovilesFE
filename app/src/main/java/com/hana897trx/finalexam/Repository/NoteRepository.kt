@@ -19,9 +19,6 @@ class NoteRepository(application: Application) : AppCompatActivity() {
         var noteDB = NoteDB.getInstance(application)
         noteDao = noteDB.noteDao()
 
-        var notemodel = NoteModel(0, "Hello", "Hello World", 2)
-        insert(notemodel)
-
         allNotes = noteDao.getAllNotes()
     }
 
