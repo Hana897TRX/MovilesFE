@@ -9,7 +9,7 @@ import com.hana897trx.finalexam.Models.NoteModel
 
 @Database(entities = [NoteModel::class], version = 1)
 abstract class NoteDB : RoomDatabase(){
-    abstract fun locationDao(): NoteDao
+    abstract fun noteDao(): NoteDao
     companion object{
         private var INSTANCE: NoteDB? = null
 
