@@ -9,13 +9,18 @@ import androidx.lifecycle.ViewModel
 import com.hana897trx.finalexam.Models.NoteModel
 import com.hana897trx.finalexam.Repository.NoteRepository
 
-class NoteViewModel(context: Context) : AndroidViewModel(context as Application) {
+class NoteViewModel public constructor(application: Application) : AndroidViewModel(application) {
     private lateinit var nodeRepository : NoteRepository
     private lateinit var allNotes : LiveData<List<NoteModel>>
 
     init {
-        nodeRepository = NoteRepository(context)
+        nodeRepository = NoteRepository(application)
         allNotes = nodeRepository.getAllNotes()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
     }
 
     fun insert(node : NoteModel){
