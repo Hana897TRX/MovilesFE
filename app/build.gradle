@@ -47,6 +47,7 @@ dependencies {
 
     //  Lifecycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
 
     // RomDB
     kapt 'androidx.room:room-compiler:2.3.0-alpha03'
